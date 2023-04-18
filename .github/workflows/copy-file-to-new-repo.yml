@@ -18,5 +18,5 @@ jobs:
         run: npm install
       - name: Copy file to new repo
         env:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TOKEN }}
         run: node github-action/copy-file-to-new-repo.js
