@@ -1,11 +1,10 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
 const { Octokit } = require("@octokit/rest");
 
-const BASE_URL = 'https://api.github.com/repos'
 const token = process.env.token;
 const octokit = new Octokit({ auth: token });
 
+// Copies contents of code of conduct source file and copies them over to a target repo
+// Needs arguments repo: 'name of target repo', path: 'path of file to copy contents into'
 async function updateCodeOfConduct(repo, path) {
     const codeOfConductSource = await octokit.rest.repos.getContent({
         owner: 'bootcamp-brian',
@@ -23,17 +22,13 @@ async function updateCodeOfConduct(repo, path) {
 
     if (currentCodeOfConduct.data.sha) {
         const { sha } = currentCodeOfConduct.data;
-        const response = await octokit.request(`PUT /repos/bootcamp-brian/${repo}/contents/${path}`, {
+        const response = await octokit.rest.repos.createOrUpdateFileContents({
+            owner: 'bootcamp-brian',
+            repo,
+            path,
             message: 'Updating code of conduct',
-            committer: {
-              name: 'bootcamp-brian',
-              email: 'braintm2@gmail.com'
-            },
             content,
             sha,
-            headers: {
-              'X-GitHub-Api-Version': '2022-11-28'
-            }
         });
         console.log(response)
     } else {
@@ -49,4 +44,5 @@ async function updateCodeOfConduct(repo, path) {
     
 }
 
+// Run updateCodeofConduct() for all repos that need a copy of the code of conduct
 updateCodeOfConduct('github-actions-testing1', 'README.md');
