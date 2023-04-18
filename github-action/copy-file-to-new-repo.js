@@ -13,6 +13,7 @@ async function updateCodeOfConduct(repo, path) {
         path: 'README.md',
     });
 
+    console.log (codeOfConductSource)
     const { content } = codeOfConductSource.data;
 
     const currentCodeOfConduct = await octokit.rest.repos.getContent({
@@ -21,10 +22,11 @@ async function updateCodeOfConduct(repo, path) {
         path,
     });
 
+    console.log(currentCodeOfConduct)
     const { sha } = currentCodeOfConduct;
 
     if (sha) {
-        await octokit.rest.repos.createOrUpdateFileContents({
+        const response = await octokit.rest.repos.createOrUpdateFileContents({
             owner: 'bootcamp-brian',
             repo,
             path,
@@ -32,14 +34,16 @@ async function updateCodeOfConduct(repo, path) {
             content,
             sha,
         });
+        console.log(response)
     } else {
-        await octokit.rest.repos.createOrUpdateFileContents({
+        const response = await octokit.rest.repos.createOrUpdateFileContents({
             owner: 'bootcamp-brian',
             repo,
             path,
             message: 'Updating code of conduct',
             content,
         });
+        console.log(response)
     }
     
 }
