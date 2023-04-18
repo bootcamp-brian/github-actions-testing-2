@@ -6,7 +6,6 @@ on: push
 
 jobs:
   update_code_of_conduct:
-    permissions: write-all
     runs-on: ubuntu-latest
     
     steps:
