@@ -2,7 +2,6 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const { Octokit } = require("@octokit/rest");
 
-console.log (process.env.token)
 const BASE_URL = 'https://api.github.com/repos'
 const token = process.env.token;
 const octokit = new Octokit({ auth: token });
@@ -31,10 +30,6 @@ async function updateCodeOfConduct(repo, path) {
             message: 'Updating code of conduct',
             content,
             sha,
-            committer: {
-              name: "tester",
-              email: "test@test.com"
-            }
         });
         console.log(response)
     } else {
@@ -44,10 +39,6 @@ async function updateCodeOfConduct(repo, path) {
             path,
             message: 'Updating code of conduct',
             content,
-            committer: {
-              name: "tester",
-              email: "test@test.com"
-            }
         });
         console.log(response)
     }
