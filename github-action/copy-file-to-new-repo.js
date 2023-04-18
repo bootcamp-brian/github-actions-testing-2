@@ -1,42 +1,47 @@
+const core = require('@actions/core');
+const github = require('@actions/github');
+const { Octokit } = require("@octokit/rest");
+
 const BASE_URL = 'https://api.github.com/repos'
 const token = process.env.token;
+const octokit = new Octokit({ auth: token });
 
 async function updateCodeOfConduct(repo, path) {
-    const codeOfConductSource = await fetch(`${BASE_URL}/bootcamp-brian/github-actions-testing-2/contents/README.md`, {
-      method: "GET",
-      headers: {
-        'Accept': 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28'
-      }
+    const codeOfConductSource = await octokit.rest.repos.getContent({
+        owner: 'bootcamp-brian',
+        repo: 'github-actions-testing-2',
+        path: 'README.md',
     });
 
     const { content } = codeOfConductSource.data;
 
-    const currentCodeOfConduct = await fetch(`${BASE_URL}/bootcamp-brian/${ repo }/contents/${ path }`, {
-      method: "GET",
-      headers: {
-        'Accept': 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28'
-      }
+    const currentCodeOfConduct = await octokit.rest.repos.getContent({
+        owner: 'bootcamp-brian',
+        repo,
+        path,
     });
 
     const { sha } = currentCodeOfConduct;
 
-    await fetch(`${BASE_URL}/bootcamp-brian/${ repo }/contents/${ path }`, {
-      method: "PUT",
-      message: 'updating code of conduct',
-      committer: {
-        name: 'Test Case',
-        email: 'test@test.com'
-      },
-      content: `${ content }`,
-      sha: `${ sha }`,
-      headers: {
-        'Accept': 'application/vnd.github+json',
-        'X-GitHub-Api-Version': '2022-11-28',
-        'Authorization': `Bearer ${ token }`
-      }
-    });
+    if (sha) {
+        await octokit.rest.repos.createOrUpdateFileContents({
+            owner: 'bootcamp-brian',
+            repo,
+            path,
+            message: 'Updating code of conduct',
+            content,
+            sha,
+        });
+    } else {
+        await octokit.rest.repos.createOrUpdateFileContents({
+            owner: 'bootcamp-brian',
+            repo,
+            path,
+            message: 'Updating code of conduct',
+            content,
+        });
+    }
+    
 }
 
 updateCodeOfConduct('github-actions-testing1', 'README.md');
