@@ -8,7 +8,14 @@ jobs:
   update_code_of_conduct:
     runs-on: ubuntu-latest
     
-    steps:
+    steps:    
+    # setup node 
+    - name: Setup node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+        cache: 'npm'
+        
     - name: Copy file to new repo
       env:
         token: ${{ secrets.GITHUB_TOKEN }}
