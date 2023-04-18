@@ -9,10 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: GitHub Action for install npm dependencies
-      uses: bahmutov/npm-install@v1
-      with:
-        working-directory: ./github-action
     - name: Copy file to new repo
       env:
         token: ${{ secrets.GITHUB_TOKEN }}
