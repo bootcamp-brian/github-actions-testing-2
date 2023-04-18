@@ -1,8 +1,8 @@
 name: Update Code of Conduct
-on:
-  push:
-    paths:
-      - 'README.md'
+on: push
+  # push:
+  #   paths:
+  #     - 'README.md'
 
 jobs:
   update_code_of_conduct:
@@ -14,7 +14,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '12.x'
-
+      - name: Install dependencies
+        run: npm install
       - name: Copy file to new repo
         env:
           token: ${{ secrets.GITHUB_TOKEN }}
