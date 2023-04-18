@@ -1,5 +1,4 @@
 name: Update Code of Conduct
-
 on:
   push:
     paths:
@@ -8,14 +7,13 @@ on:
 jobs:
   update_code_of_conduct:
     runs-on: ubuntu-latest
+    
     steps:
-    - name: Copy file to new repo
+    - name: GitHub Action for install npm dependencies
+      uses: bahmutov/npm-install@v1
       with:
-        repo: 'github-actions-testing1'
-        path: 'README.md'
+        working-directory: ./github-action
+    - name: Copy file to new repo
+      env:
         token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-      run: node github-actions/copy-file-to-new-repo.js
+      run: node github-action/copy-file-to-new-repo.js
