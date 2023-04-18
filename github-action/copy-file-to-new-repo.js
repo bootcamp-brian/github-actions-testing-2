@@ -21,9 +21,10 @@ async function updateCodeOfConduct(repo, path) {
         path,
     });
 
-    const { sha } = currentCodeOfConduct;
+    console.log(token)
+    console.log (currentCodeOfConduct)
 
-    console.log(sha)
+    const { sha } = currentCodeOfConduct;
 
     if (sha) {
         const response = await octokit.rest.repos.createOrUpdateFileContents({
