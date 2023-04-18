@@ -18,6 +18,4 @@ jobs:
           description: 'README.md'
           required: true
         token: ${{ secrets.GITHUB_TOKEN }}
-      runs:
-        using: 'node16'
-        main: 'copy-file-to-new-repo.js'
+      runs: node github-actions/copy-file-to-new-repo.js
