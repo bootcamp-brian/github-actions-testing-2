@@ -7,15 +7,11 @@ on:
       - 'README.js'
 
 jobs:
-  github_data:
+  update_code_of_conduct:
     runs-on: ubuntu-latest
     
     steps:
     - name: Copy file to new repo
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '14'
       inputs:
         repo:
           description: 'github-actions-testing1'
@@ -23,6 +19,7 @@ jobs:
         path:
           description: 'README.md'
           required: true
-      env:
         token: ${{ secrets.GITHUB_TOKEN }}
-      run: node github-actions/copy-file-to-new-repo.js
+      runs:
+        using: 'node16'
+        main: 'github-actions/copy-file-to-new-repo.js'
