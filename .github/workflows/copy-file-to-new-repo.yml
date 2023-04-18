@@ -8,20 +8,19 @@ jobs:
   update_code_of_conduct:
     runs-on: ubuntu-latest
     
-    steps:    
-    # setup node 
-    - name: Setup node
-      uses: actions/setup-node@v2
-      with:
-        node-version: '14'
-        cache: 'npm'
-        
-    # install dependencies to run js file
-    - name: Install npm dependencies
-      run: npm install
-      working-directory: ./github-action
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x, 15.x]
+
+    steps:
+      - uses: actions/checkout@v3
       
-    - name: Copy file to new repo
-      env:
-        token: ${{ secrets.GITHUB_TOKEN }}
-      run: node github-action/copy-file-to-new-repo.js
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Copy file to new repo
+        env:
+          token: ${{ secrets.GITHUB_TOKEN }}
+        run: node github-action/copy-file-to-new-repo.js
