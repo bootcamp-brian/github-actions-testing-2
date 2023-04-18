@@ -30,7 +30,6 @@ async function updateCodeOfConduct(repo, path) {
             content,
             sha,
         });
-        console.log(response)
     } else {
         const response = await octokit.rest.repos.createOrUpdateFileContents({
             owner: 'bootcamp-brian',
@@ -39,7 +38,6 @@ async function updateCodeOfConduct(repo, path) {
             message: 'Updating code of conduct',
             content,
         });
-        console.log(response)
     }
     
 }
