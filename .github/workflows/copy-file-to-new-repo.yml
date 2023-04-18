@@ -1,6 +1,4 @@
-name: Schedule Daily 1100
-
-# Run this action every day at 3am Pacific (11 am UTC)
+name: Update Code of Conduct
 on:
   push:
     paths:
@@ -22,4 +20,4 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
       runs:
         using: 'node16'
-        main: 'github-actions/copy-file-to-new-repo.js'
+        main: 'copy-file-to-new-repo.js'
