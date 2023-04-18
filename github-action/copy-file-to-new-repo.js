@@ -13,7 +13,6 @@ async function updateCodeOfConduct(repo, path) {
         path: 'README.md',
     });
 
-    console.log (codeOfConductSource)
     const { content } = codeOfConductSource.data;
 
     const currentCodeOfConduct = await octokit.rest.repos.getContent({
@@ -22,8 +21,9 @@ async function updateCodeOfConduct(repo, path) {
         path,
     });
 
-    console.log(currentCodeOfConduct)
     const { sha } = currentCodeOfConduct;
+
+    console.log(sha)
 
     if (sha) {
         const response = await octokit.rest.repos.createOrUpdateFileContents({
@@ -33,6 +33,10 @@ async function updateCodeOfConduct(repo, path) {
             message: 'Updating code of conduct',
             content,
             sha,
+            committer: {
+              name: "tester",
+              email: "test@test.com"
+            }
         });
         console.log(response)
     } else {
@@ -42,6 +46,10 @@ async function updateCodeOfConduct(repo, path) {
             path,
             message: 'Updating code of conduct',
             content,
+            committer: {
+              name: "tester",
+              email: "test@test.com"
+            }
         });
         console.log(response)
     }
