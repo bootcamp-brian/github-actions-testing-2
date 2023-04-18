@@ -23,24 +23,24 @@ async function updateCodeOfConduct(repo, path) {
 
     if (currentCodeOfConduct.data.sha) {
         const { sha } = currentCodeOfConduct.data;
-        const response = await octokit.rest.repos.createOrUpdateFileContents({
-            owner: 'bootcamp-brian',
-            repo,
-            path,
+        const response = await octokit.request(`PUT /repos/bootcamp-brian/${repo}/contents/${path}`, {
             message: 'Updating code of conduct',
             content,
             sha,
+            headers: {
+              'X-GitHub-Api-Version': '2022-11-28'
+            }
         });
         console.log(response)
     } else {
-        const response = await octokit.rest.repos.createOrUpdateFileContents({
-            owner: 'bootcamp-brian',
-            repo,
-            path,
-            message: 'Updating code of conduct',
-            content,
-        });
-        console.log(response)
+        // const response = await octokit.rest.repos.createOrUpdateFileContents({
+        //     owner: 'bootcamp-brian',
+        //     repo,
+        //     path,
+        //     message: 'Updating code of conduct',
+        //     content,
+        // });
+        // console.log(response)
     }
     
 }
