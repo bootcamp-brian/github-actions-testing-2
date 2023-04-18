@@ -9,14 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:    
+    # change directory
+    - name: Change directory
+      run: cd github-action
     # setup node 
     - name: Setup node
       uses: actions/setup-node@v2
       with:
         node-version: '14'
         cache: 'npm'
-        
+
     - name: Copy file to new repo
       env:
         token: ${{ secrets.GITHUB_TOKEN }}
-      run: node github-action/copy-file-to-new-repo.js
+      run: node copy-file-to-new-repo.js
