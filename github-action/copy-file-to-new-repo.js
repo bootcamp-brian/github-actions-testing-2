@@ -2,6 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const { Octokit } = require("@octokit/rest");
 
+console.log (process.env.token, env.token)
 const BASE_URL = 'https://api.github.com/repos'
 const token = process.env.token;
 const octokit = new Octokit({ auth: token });
@@ -20,8 +21,6 @@ async function updateCodeOfConduct(repo, path) {
         repo,
         path,
     });
-
-    console.log (currentCodeOfConduct.data.sha)
 
     if (currentCodeOfConduct.data.sha) {
         const { sha } = currentCodeOfConduct.data;
