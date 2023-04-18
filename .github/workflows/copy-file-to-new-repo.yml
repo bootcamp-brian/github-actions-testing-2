@@ -4,18 +4,24 @@ on:
     paths:
       - 'README.md'
 
+inputs:
+  repo:
+    description: 'Name of repo where file is located'
+    required: true
+  path:
+    description: 'Path to file to update'
+    required: true
+  token:
+    description: 'Github token'
+    required: true
+
 jobs:
   update_code_of_conduct:
     runs-on: ubuntu-latest
-    
+    with:
+      repo: 'github-actions-testing1'
+      path: 'README.md'
+      token: ${{ secrets.GITHUB_TOKEN }}
     steps:
     - name: Copy file to new repo
-      inputs:
-        repo:
-          description: 'github-actions-testing1'
-          required: true
-        path:
-          description: 'README.md'
-          required: true
-        token: ${{ secrets.GITHUB_TOKEN }}
       run: node github-actions/copy-file-to-new-repo.js
