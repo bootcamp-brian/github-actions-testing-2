@@ -2,7 +2,7 @@ name: Update Code of Conduct
 on:
   push:
     paths:
-      - 'README.js'
+      - 'README.md'
 
 jobs:
   update_code_of_conduct:
