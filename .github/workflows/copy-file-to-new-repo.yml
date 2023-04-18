@@ -1,0 +1,28 @@
+name: Schedule Daily 1100
+
+# Run this action every day at 3am Pacific (11 am UTC)
+on:
+  push:
+    paths:
+      - 'README.js'
+
+jobs:
+  github_data:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Copy file to new repo
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      inputs:
+        repo:
+          description: 'github-actions-testing1'
+          required: true
+        path:
+          description: 'README.md'
+          required: true
+      env:
+        token: ${{ secrets.GITHUB_TOKEN }}
+      run: node github-actions/copy-file-to-new-repo.js
