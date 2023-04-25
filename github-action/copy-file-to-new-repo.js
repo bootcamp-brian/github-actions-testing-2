@@ -17,10 +17,12 @@ async function updateCodeOfConduct(repo, path) {
 
     console.log(repo, path);
 
+    let currentCodeOfConduct = false;
+    
     try {
-        const currentCodeOfConduct = await octokit.request(`GET /repos/${owner}/${repo}/contents/${path}`)
-    } catch (error) {
-        console.error(error)
+        currentCodeOfConduct = await octokit.request(`GET /repos/${owner}/${repo}/contents/${path}`)
+    } catch {
+        console.log('there was an error')
     }
 
     console.log(currentCodeOfConduct);
