@@ -1,5 +1,5 @@
 name: Update Code of Conduct
-on: push
+on: workflow_dispatch
   # push:
   #   paths:
   #     - 'README.md'
