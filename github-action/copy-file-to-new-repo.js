@@ -17,8 +17,8 @@ async function updateCodeOfConduct(repos) {
 
         try {
             currentCodeOfConduct = await octokit.request(`GET /repos/${owner}/${name}/contents/${path}`);
-        } catch {
-            console.log('there was an error')
+        } catch (error) {
+            console.error(error)
         }
 
         if (currentCodeOfConduct) {
