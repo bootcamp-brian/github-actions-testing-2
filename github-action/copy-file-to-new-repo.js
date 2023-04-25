@@ -25,11 +25,13 @@ async function updateCodeOfConduct(repo, path) {
         const { sha } = currentCodeOfConduct.data;
         const response = await octokit.request(`PUT /repos/${owner}/${repo}/contents/${path}`, {
             sha,
-            message: 'Updating code of conduct'
+            message: 'Updating code of conduct',
+            content
         });
     } else {
         const response = await octokit.request(`PUT /repos/${owner}/${repo}/contents/${path}`, {
-            message: 'Updating code of conduct'
+            message: 'Updating code of conduct',
+            content
         });
     }
 }
