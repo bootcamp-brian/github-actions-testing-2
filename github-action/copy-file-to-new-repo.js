@@ -7,20 +7,14 @@ const octokit = new Octokit({ auth: token });
 // Needs arguments repo: 'name of target repo', path: 'path of file to copy contents into'
 async function updateCodeOfConduct(repo, path) {
     const owner = 'bootcamp-brian';
-    const codeOfConductSource = await octokit.rest.repos.getContent({
-        owner: 'bootcamp-brian',
-        repo: 'github-actions-testing-2',
-        path: 'README.md',
-    });
+    const codeOfConductSource = await octokit.request(`GET /repos/${owner}/github-actions-testing-2}/contents/README.md`);
 
     const { content } = codeOfConductSource.data;
-
-    console.log(repo, path);
 
     let currentCodeOfConduct = false;
     
     try {
-        currentCodeOfConduct = await octokit.request(`GET /repos/${owner}/${repo}/contents/${path}`)
+        currentCodeOfConduct = await octokit.request(`GET /repos/${owner}/${repo}/contents/${path}`);
     } catch {
         console.log('there was an error')
     }
@@ -29,21 +23,13 @@ async function updateCodeOfConduct(repo, path) {
 
     if (currentCodeOfConduct) {
         const { sha } = currentCodeOfConduct.data;
-        const response = await octokit.rest.repos.createOrUpdateFileContents({
-            owner: 'bootcamp-brian',
-            repo,
-            path,
-            message: 'Updating code of conduct',
-            content,
+        const response = await octokit.request(`PUT /repos/${owner}/${repo}/contents/${path}`, {
             sha,
+            message: 'Updating code of conduct'
         });
     } else {
-        const response = await octokit.rest.repos.createOrUpdateFileContents({
-            owner: 'bootcamp-brian',
-            repo,
-            path,
-            message: 'Updating code of conduct',
-            content,
+        const response = await octokit.request(`PUT /repos/${owner}/${repo}/contents/${path}`, {
+            message: 'Updating code of conduct'
         });
     }
 }
