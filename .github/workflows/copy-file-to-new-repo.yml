@@ -1,8 +1,8 @@
 name: Update Code of Conduct
-on: workflow_dispatch
-  # push:
-  #   paths:
-  #     - 'README.md'
+on:
+  push:
+    paths:
+    - 'README.md'
 
 jobs:
   update_code_of_conduct:
