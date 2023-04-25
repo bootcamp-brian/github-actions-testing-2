@@ -7,6 +7,7 @@ const octokit = new Octokit({ auth: token });
 // Needs arguments repo: 'name of target repo', path: 'path of file to copy contents into'
 async function updateCodeOfConduct(repo, path) {
     try {
+        const owner = 'bootcamp-brian';
         const codeOfConductSource = await octokit.rest.repos.getContent({
             owner: 'bootcamp-brian',
             repo: 'github-actions-testing-2',
@@ -17,13 +18,9 @@ async function updateCodeOfConduct(repo, path) {
 
         console.log(repo, path);
 
-        const currentCodeOfConduct = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
-          owner: 'bootcamp-brian',
-          repo,
-          path
-        })
+        const currentCodeOfConduct = await octokit.request(`GET /repos/${owner}/${repo}/contents/${path}`)
 
-        console.log(currentCodeOfConduct);
+        // console.log(currentCodeOfConduct);
 
         if (currentCodeOfConduct.data.sha) {
             const { sha } = currentCodeOfConduct.data;
