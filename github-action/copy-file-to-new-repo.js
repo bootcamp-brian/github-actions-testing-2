@@ -43,4 +43,4 @@ async function updateCodeOfConduct(repo, path) {
 }
 
 // Run updateCodeofConduct() for all repos that need a copy of the code of conduct
-updateCodeOfConduct('github-actions-testing1', 'README.md');
+updateCodeOfConduct('github-actions-testing1', '_includes/code-of-conduct-page/CODEOFCONDUCT.md');
