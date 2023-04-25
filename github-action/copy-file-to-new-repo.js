@@ -7,7 +7,7 @@ const octokit = new Octokit({ auth: token });
 // Needs arguments repo: 'name of target repo', path: 'path of file to copy contents into'
 async function updateCodeOfConduct(repo, path) {
     const owner = 'bootcamp-brian';
-    const codeOfConductSource = await octokit.request(`GET /repos/${owner}/github-actions-testing-2}/contents/README.md`);
+    const codeOfConductSource = await octokit.request(`GET /repos/${owner}/github-actions-testing-2/contents/README.md`);
 
     const { content } = codeOfConductSource.data;
 
