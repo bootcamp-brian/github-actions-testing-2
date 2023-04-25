@@ -17,11 +17,11 @@ async function updateCodeOfConduct(repo, path) {
 
         console.log('this line of code runs');
 
-        const currentCodeOfConduct = await octokit.rest.repos.getContent({
-            owner: 'bootcamp-brian',
-            repo,
-            path,
-        });
+        const currentCodeOfConduct = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
+          owner: 'bootcamp-brian',
+          repo,
+          path
+        })
 
         console.log(currentCodeOfConduct);
 
