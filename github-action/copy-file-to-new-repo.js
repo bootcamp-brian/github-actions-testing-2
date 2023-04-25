@@ -15,7 +15,7 @@ async function updateCodeOfConduct(repo, path) {
 
         const { content } = codeOfConductSource.data;
 
-        console.log('this line of code runs');
+        console.log(repo, path);
 
         const currentCodeOfConduct = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
           owner: 'bootcamp-brian',
