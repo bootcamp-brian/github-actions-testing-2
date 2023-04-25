@@ -25,7 +25,7 @@ async function updateCodeOfConduct(repo, path) {
 
     console.log(currentCodeOfConduct);
 
-    if (currentCodeOfConduct.data.sha) {
+    if (currentCodeOfConduct) {
         const { sha } = currentCodeOfConduct.data;
         const response = await octokit.rest.repos.createOrUpdateFileContents({
             owner: 'bootcamp-brian',
