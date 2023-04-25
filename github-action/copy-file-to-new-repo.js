@@ -6,43 +6,43 @@ const octokit = new Octokit({ auth: token });
 // Copies contents of code of conduct source file and copies them over to a target repo
 // Needs arguments repo: 'name of target repo', path: 'path of file to copy contents into'
 async function updateCodeOfConduct(repo, path) {
+    const owner = 'bootcamp-brian';
+    const codeOfConductSource = await octokit.rest.repos.getContent({
+        owner: 'bootcamp-brian',
+        repo: 'github-actions-testing-2',
+        path: 'README.md',
+    });
+
+    const { content } = codeOfConductSource.data;
+
+    console.log(repo, path);
+
     try {
-        const owner = 'bootcamp-brian';
-        const codeOfConductSource = await octokit.rest.repos.getContent({
-            owner: 'bootcamp-brian',
-            repo: 'github-actions-testing-2',
-            path: 'README.md',
-        });
-
-        const { content } = codeOfConductSource.data;
-
-        console.log(repo, path);
-
         const currentCodeOfConduct = await octokit.request(`GET /repos/${owner}/${repo}/contents/${path}`)
-
-        // console.log(currentCodeOfConduct);
-
-        if (currentCodeOfConduct.data.sha) {
-            const { sha } = currentCodeOfConduct.data;
-            const response = await octokit.rest.repos.createOrUpdateFileContents({
-                owner: 'bootcamp-brian',
-                repo,
-                path,
-                message: 'Updating code of conduct',
-                content,
-                sha,
-            });
-        } else {
-            const response = await octokit.rest.repos.createOrUpdateFileContents({
-                owner: 'bootcamp-brian',
-                repo,
-                path,
-                message: 'Updating code of conduct',
-                content,
-            });
-        }
     } catch (error) {
-        console.error(error);
+        console.error(error)
+    }
+
+    console.log(currentCodeOfConduct);
+
+    if (currentCodeOfConduct.data.sha) {
+        const { sha } = currentCodeOfConduct.data;
+        const response = await octokit.rest.repos.createOrUpdateFileContents({
+            owner: 'bootcamp-brian',
+            repo,
+            path,
+            message: 'Updating code of conduct',
+            content,
+            sha,
+        });
+    } else {
+        const response = await octokit.rest.repos.createOrUpdateFileContents({
+            owner: 'bootcamp-brian',
+            repo,
+            path,
+            message: 'Updating code of conduct',
+            content,
+        });
     }
 }
 
